@@ -6,7 +6,7 @@ A Python package for creating full backups of IMAP mailboxes
 ## Installation
 
 ```
-python3 -m pip install --user imapbackup3
+sudo python setup.py install
 ```
 
 ## Command line usage

@@ -4,24 +4,13 @@
 # Original code (C) 2006-2018 Rui Carmo. Code under MIT License.(C)
 
 
-import email
-import email.policy
-import gc
-import hashlib
-import imaplib
-import logging
-import mailbox
-import os
-import re
-import socket
-import sys
+import email, email.policy, gc, hashlib, imaplib, logging, mailbox, os, re, socket, sys
 
 logger = logging.getLogger("imapbackup3")
 
 
 class SkipFolderException(Exception):
     """Indicates aborting processing of current folder, continue with next folder."""
-
 
 def pretty_byte_count(num):
     """Converts integer into a human friendly count of bytes, eg: 12.243 MB"""
@@ -458,9 +447,19 @@ class IMAPBackup:
                     pretty_byte_count(biggest),
                 )
 
+
             except KeyboardInterrupt:
                 mbox.flush()
                 mbox.unlock()
+
+            except Exception as error:
+
+                logger.info(
+                    f"ERROR: problem while downloading a message with the id: {msg_id}. Error: {str(error)}"
+                )
+
+                continue
+
         mbox.flush()
         mbox.unlock()
 
